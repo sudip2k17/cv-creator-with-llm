@@ -1,7 +1,8 @@
 """
 Streamlit UI for CV Creator Capstone
 
-This single-file Streamlit app provides an interactive front-end for the
+This single-file Streamlit app proviOLLAMA_URL = os.environ.get("OLLAMA_URL", "http://localhost:11434")
+OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "gemma3:1b")s an interactive front-end for the
 CV Creation prototype. It wraps the extended pipeline that integrates:
  - Gemma 3 1B via Ollama (tailoring)
  - LlamaIndex (parsing)
@@ -77,11 +78,32 @@ except Exception:
     HAS_RESUMELM = False
 
 OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://localhost:11434")
-OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "gemma-3-1b")
+OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "gemma3:1b")
 
 # Minimal Ollama wrapper if langchain Ollama unavailable
+def find_working_ollama_url():
+    """Find a working Ollama URL from common options"""
+    test_urls = [
+        "http://localhost:11434",
+        "http://127.0.0.1:11434", 
+        "http://0.0.0.0:11434"
+    ]
+    
+    for url in test_urls:
+        try:
+            response = requests.get(f"{url}/api/version", timeout=2)
+            if response.status_code == 200:
+                return url
+        except:
+            continue
+    
+    return OLLAMA_URL  # Return default as fallback
+
 def call_ollama_direct(prompt: str, model: str = OLLAMA_MODEL, temperature: float = 0.0, max_tokens: int = 1024):
-    url = os.environ.get('OLLAMA_URL', 'http://localhost:11434') + '/api/generate'
+    # Try to find working URL dynamically
+    working_url = find_working_ollama_url()
+    url = f"{working_url}/api/generate"
+    
     payload = {
         "model": model, 
         "prompt": prompt, 
@@ -210,18 +232,39 @@ st.markdown("Upload a resume (PDF/DOCX) and a job description (TXT). The app wil
 with st.sidebar:
     st.header("🔧 System Status")
     
-    # Test Ollama connection
+    # Test Ollama connection with multiple URLs
+    working_url = find_working_ollama_url()
+    
     try:
-        test_response = requests.get(f"{OLLAMA_URL}/api/version", timeout=5)
+        test_response = requests.get(f"{working_url}/api/version", timeout=5)
         if test_response.status_code == 200:
+            version_data = test_response.json()
             st.success("✅ Ollama Connected")
-            st.write(f"**URL:** {OLLAMA_URL}")
+            st.write(f"**URL:** {working_url}")
+            st.write(f"**Version:** {version_data.get('version', 'Unknown')}")
             st.write(f"**Model:** {OLLAMA_MODEL}")
+            
+            # Test if model is available
+            models_response = requests.get(f"{working_url}/api/tags", timeout=5)
+            if models_response.status_code == 200:
+                models = models_response.json()
+                model_names = [m.get('name', '') for m in models.get('models', [])]
+                if OLLAMA_MODEL in model_names:
+                    st.success(f"✅ Model {OLLAMA_MODEL} available")
+                else:
+                    st.warning(f"⚠️ Model {OLLAMA_MODEL} not found")
+                    st.write("Available models:", model_names)
         else:
             st.error("❌ Ollama Not Responding")
     except Exception as e:
         st.error(f"❌ Ollama Connection Failed: {e}")
         st.warning("The app will not work without Ollama running")
+        st.markdown("""
+        **Troubleshooting:**
+        1. Start Ollama: `ollama serve`
+        2. Set host binding: `set OLLAMA_HOST=0.0.0.0:11434`
+        3. Restart Ollama service
+        """)
     
     # Show available features
     st.write("**Available Features:**")
