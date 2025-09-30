@@ -38,7 +38,7 @@ try:
     from langchain.prompts import PromptTemplate
     from langchain.chains import LLMChain
     from llama_index.core import Document as LIDoc
-    from llama_index import VectorStoreIndex
+    from llama_index.core import VectorStoreIndex
 except Exception as e:
     st.error(f"Missing one or more dependencies: {e}")
     raise
