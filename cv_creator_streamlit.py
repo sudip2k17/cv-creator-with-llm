@@ -82,19 +82,41 @@ OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "gemma-3-1b")
 # Minimal Ollama wrapper if langchain Ollama unavailable
 def call_ollama_direct(prompt: str, model: str = OLLAMA_MODEL, temperature: float = 0.0, max_tokens: int = 1024):
     url = os.environ.get('OLLAMA_URL', 'http://localhost:11434') + '/api/generate'
-    payload = {"model": model, "prompt": prompt, "temperature": temperature, "max_tokens": max_tokens}
-    resp = requests.post(url, json=payload, timeout=60)
-    resp.raise_for_status()
-    data = resp.json()
-    # flexible parsing
-    if isinstance(data, dict):
-        if 'results' in data and isinstance(data['results'], list):
-            return data['results'][0].get('content', '')
-        if 'text' in data:
-            return data['text']
-        if 'result' in data:
-            return data['result']
-    return str(data)
+    payload = {
+        "model": model, 
+        "prompt": prompt, 
+        "stream": False,  # Important: disable streaming for simpler handling
+        "options": {
+            "temperature": temperature, 
+            "num_predict": max_tokens
+        }
+    }
+    
+    try:
+        resp = requests.post(url, json=payload, timeout=120)
+        resp.raise_for_status()
+        data = resp.json()
+        
+        # Handle Ollama's response format
+        if isinstance(data, dict) and 'response' in data:
+            return data['response']
+        elif isinstance(data, dict):
+            # Try other possible response fields
+            if 'results' in data and isinstance(data['results'], list):
+                return data['results'][0].get('content', '')
+            if 'text' in data:
+                return data['text']
+            if 'result' in data:
+                return data['result']
+        
+        return str(data)
+        
+    except requests.exceptions.ConnectionError:
+        return "Error: Cannot connect to Ollama. Please make sure Ollama is running and accessible."
+    except requests.exceptions.Timeout:
+        return "Error: Request timed out. The model might be taking too long to respond."
+    except Exception as e:
+        return f"Error calling Ollama: {e}"
 
 # Utilities
 
@@ -145,24 +167,11 @@ def simple_text_extraction(text: str, instruction: str) -> str:
         # Return first 500 characters
         return text[:500]
 
-# LangChain + Ollama tailoring chain (fallback to direct call if unavailable)
-try:
-    if LANGCHAIN_AVAILABLE and Ollama is not None:
-        ollama_llm = Ollama(model=OLLAMA_MODEL)
-        resume_prompt = PromptTemplate(
-            input_variables=["resume_json", "job_json"],
-            template=("You are an expert CV writer. Given resume JSON and job JSON, return a polished resume in markdown.\n"
-                     "Resume: {resume_json}\nJob: {job_json}\n")
-        )
-        resume_chain = LLMChain(llm=ollama_llm, prompt=resume_prompt)
-        USE_LANGCHAIN = True
-    else:
-        resume_chain = None
-        USE_LANGCHAIN = False
-except Exception as e:
-    print(f"⚠️ LangChain setup failed: {e}")
-    resume_chain = None
-    USE_LANGCHAIN = False
+# Force disable LangChain to avoid connection issues
+USE_LANGCHAIN = False
+resume_chain = None
+
+print("🔧 LangChain disabled - using direct Ollama API only")
 
 # Simple safe JSON extractor
 import re, json
@@ -197,6 +206,29 @@ def ats_keyword_score(resume_text: str, keywords: list):
 st.title("CV Creator Capstone — Streamlit UI")
 st.markdown("Upload a resume (PDF/DOCX) and a job description (TXT). The app will parse, tailor, and output a resume.")
 
+# Test Ollama connection
+with st.sidebar:
+    st.header("🔧 System Status")
+    
+    # Test Ollama connection
+    try:
+        test_response = requests.get(f"{OLLAMA_URL}/api/version", timeout=5)
+        if test_response.status_code == 200:
+            st.success("✅ Ollama Connected")
+            st.write(f"**URL:** {OLLAMA_URL}")
+            st.write(f"**Model:** {OLLAMA_MODEL}")
+        else:
+            st.error("❌ Ollama Not Responding")
+    except Exception as e:
+        st.error(f"❌ Ollama Connection Failed: {e}")
+        st.warning("The app will not work without Ollama running")
+    
+    # Show available features
+    st.write("**Available Features:**")
+    st.write(f"• LangChain: {'✅' if LANGCHAIN_AVAILABLE else '❌'}")
+    st.write(f"• LlamaIndex: {'✅' if LLAMAINDEX_AVAILABLE else '❌'}")
+    st.write(f"• ResumeLM: {'✅' if HAS_RESUMELM else '❌'}")
+
 uploaded_resume = st.file_uploader("Upload resume (PDF or DOCX)", type=["pdf","docx"] )
 uploaded_job = st.file_uploader("Upload job description (TXT)", type=["txt"]) 
 
@@ -229,13 +261,25 @@ if uploaded_resume and uploaded_job:
         st.subheader('Parsed Job (raw from LlamaIndex)')
         st.code(parsed_job[:2000] + ("..." if len(parsed_job)>2000 else ""))
 
-        # Tailor with LangChain or direct Ollama
-        if USE_LANGCHAIN and resume_chain:
-            tailored = resume_chain.run(resume_json=parsed_resume, job_json=parsed_job)
-        else:
-            # fallback prompt for direct call
-            prompt = f"Tailor this resume JSON to this job JSON and return markdown resume:\nResume: {parsed_resume}\nJob: {parsed_job}\n"
-            tailored = call_ollama_direct(prompt, model=OLLAMA_MODEL, temperature=0.2, max_tokens=1500)
+        # Tailor with direct Ollama API (more reliable)
+        st.info("🔄 Using direct Ollama API for tailoring...")
+        prompt = f"""You are an expert CV writer. Create a tailored resume based on the following:
+
+PARSED RESUME DATA:
+{parsed_resume}
+
+JOB REQUIREMENTS:
+{parsed_job}
+
+Please create a professional, ATS-friendly resume in markdown format that:
+1. Highlights skills matching the job requirements
+2. Emphasizes relevant experience
+3. Uses keywords from the job description
+4. Maintains a clean, professional structure
+
+Return only the markdown resume without any additional commentary."""
+
+        tailored = call_ollama_direct(prompt, model=OLLAMA_MODEL, temperature=0.2, max_tokens=2000)
 
         st.subheader('Tailored Resume (Markdown)')
         st.text_area('Tailored Resume', value=tailored, height=300)
