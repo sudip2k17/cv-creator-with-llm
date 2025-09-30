@@ -34,11 +34,35 @@ try:
     import pdfplumber
     from docx import Document
     import requests
-    from langchain_community.llms import Ollama
-    from langchain.prompts import PromptTemplate
-    from langchain.chains import LLMChain
-    from llama_index.core import Document as LIDoc
-    from llama_index.core import VectorStoreIndex
+    
+    # Updated imports for newer versions
+    try:
+        from langchain_community.llms import Ollama
+        from langchain.prompts import PromptTemplate
+        from langchain.chains import LLMChain
+        LANGCHAIN_AVAILABLE = True
+    except ImportError:
+        print("⚠️ LangChain not available")
+        Ollama = None
+        PromptTemplate = None
+        LLMChain = None
+        LANGCHAIN_AVAILABLE = False
+    
+    try:
+        from llama_index.core import Document as LIDoc
+        from llama_index.core import VectorStoreIndex
+        from llama_index.core import Settings
+        from llama_index.embeddings.huggingface import HuggingFaceEmbedding
+        
+        # Configure LlamaIndex to use local embeddings
+        Settings.embed_model = HuggingFaceEmbedding(model_name="sentence-transformers/all-MiniLM-L6-v2")
+        LLAMAINDEX_AVAILABLE = True
+    except ImportError:
+        print("⚠️ LlamaIndex not available")
+        LIDoc = None
+        VectorStoreIndex = None
+        LLAMAINDEX_AVAILABLE = False
+        
 except Exception as e:
     st.error(f"Missing one or more dependencies: {e}")
     raise
@@ -86,23 +110,57 @@ def extract_text_from_docx(path: str) -> str:
     doc = Document(path)
     return "\n".join([p.text for p in doc.paragraphs if p.text.strip()])
 
-# LlamaIndex small wrapper
+# LlamaIndex small wrapper with error handling
 def parse_with_llama_index(text: str, instruction: str) -> str:
-    doc = LIDoc(text)
-    index = VectorStoreIndex.from_documents([doc])
-    qe = index.as_query_engine()
-    r = qe.query(instruction)
-    return getattr(r, 'response', str(r))
+    if not LLAMAINDEX_AVAILABLE or LIDoc is None or VectorStoreIndex is None:
+        # Fallback to simple text processing
+        return simple_text_extraction(text, instruction)
+    
+    try:
+        doc = LIDoc(text=text)
+        index = VectorStoreIndex.from_documents([doc])
+        qe = index.as_query_engine()
+        r = qe.query(instruction)
+        return getattr(r, 'response', str(r))
+    except Exception as e:
+        print(f"⚠️ LlamaIndex failed: {e}")
+        return simple_text_extraction(text, instruction)
 
-# LangChain + Ollama tailoring chain (fallback to direct call if Ollama LLM unavailable)
+def simple_text_extraction(text: str, instruction: str) -> str:
+    """Simple fallback text extraction when LlamaIndex fails"""
+    if "name" in instruction.lower() and "contact" in instruction.lower():
+        # Extract first few lines for contact info
+        lines = text.split('\n')[:5]
+        return '\n'.join([line.strip() for line in lines if line.strip()])
+    elif "skills" in instruction.lower():
+        # Look for skills
+        skill_keywords = ['python', 'java', 'javascript', 'react', 'sql', 'html', 'css', 'git']
+        found_skills = []
+        for line in text.split('\n'):
+            for skill in skill_keywords:
+                if skill.lower() in line.lower():
+                    found_skills.append(skill.title())
+        return f'{{"skills": {list(set(found_skills))}}}'
+    else:
+        # Return first 500 characters
+        return text[:500]
+
+# LangChain + Ollama tailoring chain (fallback to direct call if unavailable)
 try:
-    ollama_llm = Ollama(model=OLLAMA_MODEL)
-    resume_prompt = PromptTemplate(input_variables=["resume_json", "job_json"],
-                                   template=("You are an expert CV writer. Given resume JSON and job JSON, return a polished resume in markdown.\n"
-                                             "Resume: {resume_json}\nJob: {job_json}\n"))
-    resume_chain = LLMChain(llm=ollama_llm, prompt=resume_prompt)
-    USE_LANGCHAIN = True
-except Exception:
+    if LANGCHAIN_AVAILABLE and Ollama is not None:
+        ollama_llm = Ollama(model=OLLAMA_MODEL)
+        resume_prompt = PromptTemplate(
+            input_variables=["resume_json", "job_json"],
+            template=("You are an expert CV writer. Given resume JSON and job JSON, return a polished resume in markdown.\n"
+                     "Resume: {resume_json}\nJob: {job_json}\n")
+        )
+        resume_chain = LLMChain(llm=ollama_llm, prompt=resume_prompt)
+        USE_LANGCHAIN = True
+    else:
+        resume_chain = None
+        USE_LANGCHAIN = False
+except Exception as e:
+    print(f"⚠️ LangChain setup failed: {e}")
     resume_chain = None
     USE_LANGCHAIN = False
 
