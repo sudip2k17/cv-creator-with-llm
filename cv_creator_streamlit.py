@@ -1,8 +1,7 @@
 """
 Streamlit UI for CV Creator Capstone
 
-This single-file Streamlit app proviOLLAMA_URL = os.environ.get("OLLAMA_URL", "http://localhost:11434")
-OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "gemma3:1b")s an interactive front-end for the
+This single-file Streamlit app provides an interactive front-end for the
 CV Creation prototype. It wraps the extended pipeline that integrates:
  - Gemma 3 1B via Ollama (tailoring)
  - LlamaIndex (parsing)
@@ -16,6 +15,7 @@ Usage:
 Notes:
  - This file intentionally keeps the core pipeline functions local so the app is runnable standalone.
  - If you already have the prototype file, you can import from it instead of duplicating code.
+ - ResumeLM is optional - the app works fully without it using built-in ATS scoring.
 
 Requirements:
   pip install streamlit pdfplumber python-docx langchain llama-index requests
@@ -270,7 +270,9 @@ with st.sidebar:
     st.write("**Available Features:**")
     st.write(f"• LangChain: {'✅' if LANGCHAIN_AVAILABLE else '❌'}")
     st.write(f"• LlamaIndex: {'✅' if LLAMAINDEX_AVAILABLE else '❌'}")
-    st.write(f"• ResumeLM: {'✅' if HAS_RESUMELM else '❌'}")
+    st.write(f"• ResumeLM (Optional): {'✅' if HAS_RESUMELM else '➖'}")
+    if not HAS_RESUMELM:
+        st.caption("💡 ResumeLM is optional - core functionality works without it")
 
 uploaded_resume = st.file_uploader("Upload resume (PDF or DOCX)", type=["pdf","docx"] )
 uploaded_job = st.file_uploader("Upload job description (TXT)", type=["txt"]) 
