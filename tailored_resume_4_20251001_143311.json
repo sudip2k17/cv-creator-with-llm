@@ -1,0 +1,90 @@
+{
+  "tailored_resume": {
+    "job_requirements": {
+      "context": "A data scientist job description involves using programming, math, and statistics to analyze large datasets, build predictive models, and extract actionable insights that help organizations solve business problems and improve operations. Key responsibilities include collecting and cleaning data, developing machine learning algorithms, conducting exploratory data analysis, and communicating findings through reports and visualizations to stakeholders. Collaboration with engineers, analysts, and product managers is crucial for the entire data science workflow.",
+      "core_responsibilities": [
+        "Data Collection and Preparation",
+        "Exploratory Data Analysis (EDA)",
+        "Model Development",
+        "Algorithm Creation",
+        "Insight Communication",
+        "Problem-Solving"
+      ],
+      "key_skills": [
+        "Programming: Python, R",
+        "Machine Learning",
+        "Statistics",
+        "Databases",
+        "Business Acumen",
+        "Collaboration and Workflow"
+      ],
+      "keywords": [
+        "Data Science",
+        "Machine Learning",
+        "Statistical Modeling",
+        "Data Analysis",
+        "Predictive Modeling",
+        "Algorithm Design",
+        "Data Visualization",
+        "ETL",
+        "Data Engineering"
+      ]
+    },
+    "experience": [
+      {
+        "title": "Senior Data Scientist",
+        "company": "Hargrove Tech",
+        "dates": "2022 - Present"
+      },
+      {
+        "title": "Lead Data Scientist",
+        "company": "Suntrust Analytics",
+        "dates": "2019 - 2022"
+      },
+      {
+        "title": "Data Analyst",
+        "company": "Maverick Solutions",
+        "dates": "2017 - 2019"
+      }
+    ],
+    "education": [
+      {
+        "degree": "Bowers-Mcfarland University, Leemouth",
+        "major": "Dietitian",
+        "dates": "2017 - 2019"
+      }
+    ],
+    "projects": [
+      {
+        "name": "Fraud Detection System",
+        "description": "Developed a real-time fraud detection system using Python and machine learning algorithms to identify suspicious transactions."
+      },
+      {
+        "name": "Customer Segmentation Model",
+        "description": "Built a customer segmentation model using SQL and Python to group customers based on their behavior and demographics."
+      },
+      {
+        "name": "Data Science Workshops & Training",
+        "description": "Led workshops and training sessions on data science techniques to stakeholders."
+      }
+    ]
+  },
+  "parsing_results": {
+    "parsed_resume": "Context information is below.\n---------------------\nSENIOR DATA SCIENTIST\nDavid Wright (cid:127) qcampbell@hotmail.com (cid:127) 089.491.4865\nSummary\nTravel central write popular. Experienced in Media planner and exploit synergistic web services.\nProfessional Experience\nSenior Data Scientist - Hargrove Tech (Chicago, IL)\n(cid:127) Lead a team of data scientists in developing advanced machine learning models.\n(cid:127) Optimized data pipelines, reducing processing time and saving costs.\n(cid:127) Collaborated with teams to drive data-driven strategies.\nLead Data Scientist - Suntrust Analytics (Chicago, IL)\n(cid:127) Developed a real-time fraud detection system.\n(cid:127) Built and maintained a customer segmentation model.\n(cid:127) Conducted workshops and training on data science techniques.\nData Analyst - Maverick Solutions (New York, NY)\n(cid:127) Analyzed datasets using SQL and Python for actionable insights.\n(cid:127) Developed ETL processes for data integration.\n(cid:127) Created ad-hoc reports for stakeholders.\nEducation\nBowers-Mcfarland University, Leemouth - MS in Dietitian\nSkills\nSQL, Machine Learning, Java, Python, R\n---------------------\nGiven the context information and not prior knowledge, answer the query.\nQuery: Extract name, contact, skills, education, work experience, and projects in JSON.\nAnswer: ",
+    "parsed_job": "Context information is below.\n---------------------\nA data scientist job description involves using programming, math, and statistics to analyze large datasets, build predictive models, and extract actionable insights that help organizations solve business problems and improve operations. Key responsibilities include collecting and cleaning data, developing machine learning algorithms, conducting exploratory data analysis, and communicating findings through reports and visualizations to stakeholders. Collaboration with engineers, analysts, and product managers is crucial for the entire data science workflow. \nCore Responsibilities\nData Collection and Preparation: Gathering data from various sources, transforming it into usable formats, and performing cleaning and integration tasks. \nExploratory Data Analysis (EDA): Investigating datasets to uncover patterns, trends, and correlations that can inform business decisions. \nModel Development: Designing and implementing machine learning and statistical models to predict future outcomes and automate processes. \nAlgorithm Creation: Developing algorithms to manage, organize, and extract meaningful information from large data sets. \nInsight Communication: Presenting findings and recommendations to non-technical stakeholders through data visualizations and reports. \nProblem-Solving: Applying data-driven solutions to complex business challenges and strategic goals. \nKey Skills\nProgramming: Proficiency in languages like Python and R. \nMachine Learning: Expertise in building and optimizing machine learning models and algorithms. \nStatistics: Strong foundational knowledge of statistical methods for data analysis and inference. \nDatabases: Understanding and ability to work with various database technologies. \nBusiness Acumen: The ability to understand business problems and translate them into data science solutions. \nCollaboration and Workflow\nA data scientist often works within a team, collaborating with data engineers, data analysts, product managers, and software engineers. \nThe general workflow involves idea generation, data acquisition, research, model building and testing, and deployment, often requiring iterative refinement based on feedback.\n---------------------\nGiven the context information and not prior knowledge, answer the query.\nQuery: Extract required skills, role responsibilities, and keywords in JSON.\nAnswer: "
+  },
+  "ats_scores": {
+    "basic_score": {
+      "matched": [],
+      "score": 0.0
+    },
+    "resumelm_score": null
+  },
+  "metadata": {
+    "ollama_model": "gemma3:1b",
+    "langchain_available": true,
+    "llamaindex_available": true,
+    "resumelm_available": false,
+    "source_resume": "input\\resume_4.pdf"
+  }
+}

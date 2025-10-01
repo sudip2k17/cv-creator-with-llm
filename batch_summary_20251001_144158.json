@@ -1,0 +1,103 @@
+{
+  "batch_summary": {
+    "total_resumes": 10,
+    "successful": 10,
+    "failed": 0,
+    "processed_at": "2025-10-01T14:41:58.680458",
+    "job_file": "job.txt",
+    "output_directory": "./tailored_resumes"
+  },
+  "successful_outputs": [
+    {
+      "resume": "input\\resume_1.pdf",
+      "output": "./tailored_resumes\\tailored_resume_1_20251001_142652.json",
+      "basic_score": {
+        "matched": [],
+        "score": 0.0
+      },
+      "resumelm_score": null
+    },
+    {
+      "resume": "input\\resume_10.pdf",
+      "output": "./tailored_resumes\\tailored_resume_10_20251001_142815.json",
+      "basic_score": {
+        "matched": [],
+        "score": 0.0
+      },
+      "resumelm_score": null
+    },
+    {
+      "resume": "input\\resume_2.pdf",
+      "output": "./tailored_resumes\\tailored_resume_2_20251001_142938.json",
+      "basic_score": {
+        "matched": [],
+        "score": 0.0
+      },
+      "resumelm_score": null
+    },
+    {
+      "resume": "input\\resume_3.pdf",
+      "output": "./tailored_resumes\\tailored_resume_3_20251001_143105.json",
+      "basic_score": {
+        "matched": [],
+        "score": 0.0
+      },
+      "resumelm_score": null
+    },
+    {
+      "resume": "input\\resume_4.pdf",
+      "output": "./tailored_resumes\\tailored_resume_4_20251001_143311.json",
+      "basic_score": {
+        "matched": [],
+        "score": 0.0
+      },
+      "resumelm_score": null
+    },
+    {
+      "resume": "input\\resume_5.pdf",
+      "output": "./tailored_resumes\\tailored_resume_5_20251001_143449.json",
+      "basic_score": {
+        "matched": [],
+        "score": 0.0
+      },
+      "resumelm_score": null
+    },
+    {
+      "resume": "input\\resume_6.pdf",
+      "output": "./tailored_resumes\\tailored_resume_6_20251001_143626.json",
+      "basic_score": {
+        "matched": [],
+        "score": 0.0
+      },
+      "resumelm_score": null
+    },
+    {
+      "resume": "input\\resume_7.pdf",
+      "output": "./tailored_resumes\\tailored_resume_7_20251001_143734.json",
+      "basic_score": {
+        "matched": [],
+        "score": 0.0
+      },
+      "resumelm_score": null
+    },
+    {
+      "resume": "input\\resume_8.pdf",
+      "output": "./tailored_resumes\\tailored_resume_8_20251001_143931.json",
+      "basic_score": {
+        "matched": [],
+        "score": 0.0
+      },
+      "resumelm_score": null
+    },
+    {
+      "resume": "input\\resume_9.pdf",
+      "output": "./tailored_resumes\\tailored_resume_9_20251001_144032.json",
+      "basic_score": {
+        "matched": [],
+        "score": 0.0
+      },
+      "resumelm_score": null
+    }
+  ],
+  "failed_outputs": []
+}

@@ -1,0 +1,76 @@
+{
+  "tailored_resume": {
+    "name": "Jane Doe",
+    "contact": "jane.doe@email.com",
+    "summary": "Highly motivated and results-oriented Data Scientist with 10+ years of experience in leveraging data to drive strategic business decisions. Proven ability to lead data analysis, develop predictive models, and communicate insights effectively. Expertise in machine learning, statistical modeling, and big data analytics.",
+    "skills": [
+      "Machine Learning",
+      "Statistical Modeling",
+      "Deep Learning",
+      "Neural Networks",
+      "Ensemble Methods",
+      "Natural Language Processing (NLP)",
+      "Regression Analysis",
+      "Time Series Analysis",
+      "Bayesian Inference",
+      "Hypothesis Testing",
+      "Experimental Design",
+      "Python",
+      "R",
+      "SQL",
+      "Java",
+      "Scala",
+      "Data Visualization"
+    ],
+    "experience": [
+      {
+        "title": "Senior Data Scientist",
+        "company": "Hargrove Tech",
+        "dates": "August 20XX \u2013 Present",
+        "responsibilities": [
+          "Led a team of 8 data scientists in developing and implementing advanced machine learning models, resulting in a 25% increase in predictive accuracy.",
+          "Spearheaded a company-wide initiative to optimize data pipelines, reducing processing time by 40% and saving $1.2M annually.",
+          "Collaborated with cross-functional teams to develop data-driven strategies, contributing to a 15% increase in overall revenue.",
+          "Performed regular workshops and training sessions on advanced data science techniques, upskilling the team and improving overall performance by 30%."
+        ]
+      },
+      {
+        "title": "Data Scientist",
+        "company": "Suntrust Analytics",
+        "dates": "July 20XX \u2013 August 20XX",
+        "responsibilities": [
+          "Developed and deployed a real-time fraud detection system using ensemble learning techniques, saving the company $3.5M in potential losses.",
+          "Built and maintained a customer segmentation model using clustering algorithms, resulting in a 20% increase in targeted marketing ROI.",
+          "Conducted regular analyses and reporting, contributing to data-driven decision making."
+        ]
+      }
+    ],
+    "education": [
+      {
+        "degree": "MS in Data Science",
+        "university": "New York University",
+        "year": "May 20XX"
+      }
+    ],
+    "projects": [
+      " [Project Name 1] - [Brief Description of Project and Results]"
+    ]
+  },
+  "parsing_results": {
+    "parsed_resume": "Context information is below.\n---------------------\nSENIOR DATA SCIENTIST\nExample by Resume Genius\nChicago, IL \u2022 your.email@email.com \u2022 (312) 875-3382\nAccomplished Senior Data Scientist with 10+ years of experience driving innovative solutions and delivering\nactionable insights. Expertise in machine learning, statistical modeling, and big data analytics. Proven track record of\nleading cross-functional teams and implementing data-driven strategies that have generated $50M+ in revenue.\nProfessional Experience\nSenior Data Scientist\nHargrove Tech, Chicago, IL\nAugust 20XX\u2013Present\n\u25cf Lead a team of 8 data scientists in developing and implementing advanced machine learning models, resulting\nin a 25% increase in predictive accuracy\n\u25cf Spearheaded a company-wide initiative to optimize data pipelines, reducing processing time by 40% and\nsaving $1.2M annually\n\u25cf Collaborate with cross-functional teams to develop data-driven strategies, contributing to a 15% increase in\noverall revenue\nLead Data Scientist\nSuntrust Analytics, Chicago, IL\nJuly 20XX\u2013August 20XX\n\u25cf Developed and deployed a real-time fraud detection system using ensemble learning techniques, saving the\ncompany $3.5M in potential losses\n\u25cf Built and maintained a customer segmentation model using clustering algorithms, resulting in a 20% increase\nin targeted marketing ROI\n\u25cf Conducted regular workshops and training sessions on advanced data science techniques, upskilling the team\nand improving overall performance by 30%\nData Analyst\nMaverick Solutions, New York, NY\nJuly 20XX\u2013August 20XX\n\u25cf Analyzed large datasets using SQL and Python, providing actionable insights to business stakeholders\n\u25cf Developed and maintained ETL processes, ensuring timely and accurate data integration from multiple\nsources\n\u25cf Created ad-hoc reports and analyses, contributing to data-driven decision making\nEducation\nNew York University, New York, NY\nMS in Data Science\nMay 20XX\nAdditional Skills\n\u25cf Machine Learning: Supervised learning, unsupervised learning, deep learning, neural networks,\nensemble methods, natural language processing (NLP)\n\u25cf Statistical Modeling: Regression analysis, time series analysis, Bayesian inference, hypothesis\ntesting, experimental design\n\u25cf Programming Languages: Python, R, SQL, Java, Scala\nDear Job Seeker,\nIf you\u2019re looking for a classy resume template, you can\u2019t do any better than\nthe \u201cMilano\u201d. Its simple elegance is just what you need if you want to imbue\nyour resume with a balance of professionalism and good taste \u2014 plus a\ndash of creativity.\nEverything on the Milano is left-aligned, which helps the hiring manager\nquickly look through your resume by simply scanning down the page to\nidentify relevant experience and skills.\nIf you\u2019re still struggling to write your resume, here are some free resources\nto help you put together a resume that shows employers you\u2019re the right\nperson for the job:\n\u00b7 Free Resume Builder\n\u00b7 How to Write a Resume\n\u00b7 Resume Samples by Industry\nOnce you have a great resume, pair it with a convincing cover letter using\nour matching 2022 cover letter template. Here are a few resources to help\nyou write a cover letter that gives your application the boost it needs to\nland you an interview:\n\u00b7 Cover Letter Builder\n\u00b7 How to Write a Cover Letter\n\u00b7 Cover Letter Examples by Industry\nBest regards,\nIMPORTANT: To delete the second page, right-click on the page and click \u201cDelete Rows\u201d\n---------------------\nGiven the context information and not prior knowledge, answer the query.\nQuery: Extract name, contact, skills, education, work experience, and projects in JSON.\nAnswer: ",
+    "parsed_job": "Context information is below.\n---------------------\nA data scientist job description involves using programming, math, and statistics to analyze large datasets, build predictive models, and extract actionable insights that help organizations solve business problems and improve operations. Key responsibilities include collecting and cleaning data, developing machine learning algorithms, conducting exploratory data analysis, and communicating findings through reports and visualizations to stakeholders. Collaboration with engineers, analysts, and product managers is crucial for the entire data science workflow. \nCore Responsibilities\nData Collection and Preparation: Gathering data from various sources, transforming it into usable formats, and performing cleaning and integration tasks. \nExploratory Data Analysis (EDA): Investigating datasets to uncover patterns, trends, and correlations that can inform business decisions. \nModel Development: Designing and implementing machine learning and statistical models to predict future outcomes and automate processes. \nAlgorithm Creation: Developing algorithms to manage, organize, and extract meaningful information from large data sets. \nInsight Communication: Presenting findings and recommendations to non-technical stakeholders through data visualizations and reports. \nProblem-Solving: Applying data-driven solutions to complex business challenges and strategic goals. \nKey Skills\nProgramming: Proficiency in languages like Python and R. \nMachine Learning: Expertise in building and optimizing machine learning models and algorithms. \nStatistics: Strong foundational knowledge of statistical methods for data analysis and inference. \nDatabases: Understanding and ability to work with various database technologies. \nBusiness Acumen: The ability to understand business problems and translate them into data science solutions. \nCollaboration and Workflow\nA data scientist often works within a team, collaborating with data engineers, data analysts, product managers, and software engineers. \nThe general workflow involves idea generation, data acquisition, research, model building and testing, and deployment, often requiring iterative refinement based on feedback.\n---------------------\nGiven the context information and not prior knowledge, answer the query.\nQuery: Extract required skills, role responsibilities, and keywords in JSON.\nAnswer: "
+  },
+  "ats_scores": {
+    "basic_score": {
+      "matched": [],
+      "score": 0.0
+    },
+    "resumelm_score": null
+  },
+  "metadata": {
+    "ollama_model": "gemma3:1b",
+    "langchain_available": true,
+    "llamaindex_available": true,
+    "resumelm_available": false
+  }
+}
